@@ -357,6 +357,8 @@
      ```
 
      > 우분투 CLI OS(20.04 LTS 버전) 에서는 패키지 설치가 불가능한듯
+     >
+     > https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-20-04
 
 2. VNC 패스워드 생성
 
@@ -364,10 +366,19 @@
 
    ```bash
    $ vncserver
+   $ vncpasswd
    ```
+
+   > 패스워드는 최대 8글자여야하고 너무 짧으면 안됨
 
    ```bash
    $ ls -lF ~/.vnc/
+   합계 24
+   -rw------- 1 seunghun seunghun   8  3월  2 19:20 passwd
+   ...
+   -rw-rw-r-- 1 seunghun seunghun 700  3월  2 19:19 seunghun-ThinkPad-T495s:3.log
+   -rw-rw-r-- 1 seunghun seunghun   6  3월  2 19:19 seunghun-ThinkPad-T495s:3.pid
+   -rwxr-xr-x 1 seunghun seunghun 225  3월  2 19:19 xstartup*
    ```
 
 3. 환경 설정
@@ -380,10 +391,10 @@
 
    ```bash
    $ vi ~/.vnc/xstartup
-   $ cat ~/.vnc/xstartup
+   $ cat ~/.vnc/xstartup # 책에서 요구한 내용
    #!/bin/sh
    
-   unset SESSION_MANAGET
+   unset SESSION_MANAGER
    unset DBUS_SESSION_BUS_ADDRESS
    
    xsetroot -solid grey
@@ -398,6 +409,7 @@
 
    ```bash
    $ vncserver -kill :1
+   Killing Xtightvnc process ID 11529
    ```
 
 5. 해상도, 픽셀의 비트 수 지정
@@ -406,6 +418,10 @@
 
    ```bash
    $ vncserver :1 -geometry 800x600 -depth 24
+   New 'X' desktop is seunghun-ThinkPad-T495s:1
+   
+   Starting applications specified in /home/seunghun/.vnc/xstartup
+   Log file is /home/seunghun/.vnc/seunghun-ThinkPad-T495s:1.log
    ```
 
    > 기본 해상도는 1024x768 임
@@ -416,6 +432,8 @@
 
    ```bash
    $ sudo ufw allow 5901/tcp
+   규칙이 업데이트됐습니다
+   규칙이 업데이트됐습니다(v6)
    ```
 
 7. VNC 클라이언트를 통한 서버 접속
